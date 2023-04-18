@@ -37,3 +37,11 @@ async def update_password(
     context: DBConnectionHandler = Depends(),
 ):
     await domain.UpdatePasswordUseCase(context, user, payload).execute()
+
+
+router.delete('/me', status_code=204)
+async def delete_user(
+    user: models.BaseUser = Depends(protected_route),
+    context: DBConnectionHandler = Depends(),
+):
+    await domain.DeleteUserUseCase(context, user).execute()
