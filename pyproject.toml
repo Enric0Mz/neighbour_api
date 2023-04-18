@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "api"
+version = "0.1.0"
+description = ""
+authors = ["Enrico Marquez <enricovmarquezz@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.0"
+sqlalchemy = "^2.0.7"
+passlib = "^1.7.4"
+pyjwt = "^2.6.0"
+python-decouple = "^3.8"
+uvicorn = "^0.21.1"
+aiomysql = "^0.1.1"
+pydantic = {extras = ["email"], version = "^1.10.7"}
+bcrypt = "^4.0.1"
+python-multipart = "^0.0.6"
+black = "^23.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
