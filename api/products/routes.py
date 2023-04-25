@@ -12,10 +12,10 @@ from . import models
 router = APIRouter(dependencies=[Depends(protected_route)])
 
 
-@router.get("/products", response_model=list[models.Product])
+@router.get("/products", response_model=common.BasePagination[models.Product])
 async def list_products(
-    user: common.user.BaseUser = Depends(protected_route),
-    params: common.page.PageParams = Depends(),
+    user: common.BaseUser = Depends(protected_route),
+    params: common.PageParams = Depends(),
     context: DBConnectionHandler = Depends(),
 ):
     return await ListProductsByUserUseCase(context, user, params).execute()

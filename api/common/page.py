@@ -3,9 +3,13 @@ from pydantic import Field
 from pydantic import validator
 from pydantic.generics import GenericModel
 from dataclasses import dataclass
+from typing import Generic
+from typing import TypeVar
 
 from api.base_app.model import BaseModel
 
+
+T_co = TypeVar("T_co", bound=BaseModel, covariant=True)
 
 
 @dataclass(frozen=True)
@@ -25,7 +29,7 @@ class Details(BaseModel):
         return 0 if val is None else val
     
 
-class BasePagination(GenericModel, BaseModel):
+class BasePagination(GenericModel, Generic[T_co], BaseModel):
     data: list = Field(default_factory=list)
     details: Details = Field(default_factory=Details)
 
