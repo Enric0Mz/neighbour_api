@@ -30,3 +30,15 @@ class ProductRepository(Repository):
             result = await session.execute(q)
 
             return [self.to_dto(item) for item in result.scalars().all()]
+        
+
+    async def count(self, clause):
+        async with self._context.create_session() as session:
+
+            q =  sa.select(sa.func.count(ProductEntity.id)).where(
+                    (ProductEntity.user_id == clause)
+                )
+            
+            result = await session.execute(q)
+
+            return result.scalar_one()
