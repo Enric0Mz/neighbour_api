@@ -4,7 +4,7 @@ from pydantic import validator
 from pydantic.generics import GenericModel
 from dataclasses import dataclass
 
-from base_app.model import BaseModel
+from api.base_app.model import BaseModel
 
 
 

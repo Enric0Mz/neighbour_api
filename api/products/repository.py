@@ -1,7 +1,6 @@
 import sqlalchemy as sa
 
-from database.config import DBConnectionHandler
-from database.repository import Repository
+from api.database.repository import Repository
 
 from .entity import ProductEntity
 from . import models

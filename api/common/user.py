@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 
-from base_app.model import BaseModel
+from api.base_app.model import BaseModel
 
 
 class BaseUser(BaseModel):

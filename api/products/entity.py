@@ -1,10 +1,12 @@
 import sqlalchemy as sa
 
-from database.entity import Entity
-from register.entities.user import UserEntity
+from api.database.entity import Entity
+from api.register.entities.user import UserEntity
 
 
 class ProductEntity(Entity):
+    __tablename__ = 'products'
+
     name = sa.Column(sa.String(255))
     description = sa.Column(sa.Text)
     image = sa.Column(sa.String)
