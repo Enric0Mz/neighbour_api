@@ -5,7 +5,7 @@ from api import common
 from api.database.config import DBConnectionHandler
 from api.base_app.security.dependecies import protected_route
 
-from .domain import ListProductsByUserUseCase
+from . import domain
 from . import models
 
 
@@ -18,4 +18,13 @@ async def list_products(
     params: common.PageParams = Depends(),
     context: DBConnectionHandler = Depends(),
 ):
-    return await ListProductsByUserUseCase(context, user, params).execute()
+    return await domain.ListProductsByUserUseCase(context, user, params).execute()
+
+
+@router.post("/products", response_model=models.Product)
+async def create_product(
+    context: DBConnectionHandler = Depends(),
+    user: common.BaseUser = Depends(protected_route),
+    payload: models.CreateProduct = Depends(),
+):
+    return await domain.CreateProductUseCase(context, user, payload).execute()

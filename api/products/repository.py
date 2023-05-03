@@ -42,3 +42,13 @@ class ProductRepository(Repository):
             result = await session.execute(q)
 
             return result.scalar_one()
+        
+
+    async def create(self, model: models.InsertProduct):
+        async with self._context.create_session() as session:
+
+            product = ProductEntity(**model.dict())
+            session.add(product)
+            await session.commit()
+
+            return self.to_dto(product)
