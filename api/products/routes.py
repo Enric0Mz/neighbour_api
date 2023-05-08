@@ -21,7 +21,7 @@ async def list_products(
     return await domain.ListProductsByUserUseCase(context, user, params).execute()
 
 
-@router.post("/products", response_model=models.Product)
+@router.post("/products")
 async def create_product(
     context: DBConnectionHandler = Depends(),
     user: common.BaseUser = Depends(protected_route),

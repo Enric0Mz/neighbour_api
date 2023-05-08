@@ -51,4 +51,5 @@ class ProductRepository(Repository):
             session.add(product)
             await session.commit()
 
-            return self.to_dto(product)
+            return product
+    

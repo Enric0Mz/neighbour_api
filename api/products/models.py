@@ -11,7 +11,7 @@ class Product(BaseModel):
     image: str
 
 
-class CreateProduct(Product):
+class CreateProduct(BaseModel):
     name: str = Body(...)
     description: str = Body(...)
     image: UploadFile = File(...) 
