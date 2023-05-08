@@ -18,7 +18,7 @@ class ProductRepository(Repository):
         )
 
     async def fetch(self, clause, page: int = 0, limit: int = 100):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             
             q = (
                 sa.select(ProductEntity)
@@ -33,7 +33,7 @@ class ProductRepository(Repository):
         
 
     async def count(self, clause):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
 
             q =  sa.select(sa.func.count(ProductEntity.id)).where(
                     (ProductEntity.user_id == clause)
@@ -45,7 +45,7 @@ class ProductRepository(Repository):
         
 
     async def create(self, model: models.InsertProduct):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
 
             product = ProductEntity(**model.dict())
             session.add(product)

@@ -8,7 +8,7 @@ from api.base_app import exc
 
 class AuthRepository(Repository):
     async def get_by_token(self, token: str) -> None:
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = sa.select(UserEntity).where(UserEntity.token == token)
 
             result = await session.execute(q)
@@ -18,7 +18,7 @@ class AuthRepository(Repository):
             raise exc.not_found()
 
     async def get_by_refresh(self, refresh: str) -> None:
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = sa.select(UserEntity).where(UserEntity.refresh_token == refresh)
 
             result = await session.execute(q)
@@ -26,7 +26,7 @@ class AuthRepository(Repository):
             return result.scalars().one()
 
     async def update_acess_token(self, email: EmailStr, token: str) -> None:
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = (
                 sa.update(UserEntity)
                 .where(UserEntity.email == email)
@@ -37,7 +37,7 @@ class AuthRepository(Repository):
             await session.commit()
 
     async def update_refresh_token(self, email: str, token: str):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = (
                 sa.update(UserEntity)
                 .where(UserEntity.email == email)

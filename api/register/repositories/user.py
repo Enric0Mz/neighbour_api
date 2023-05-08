@@ -13,14 +13,14 @@ class UsersRepository(Repository):
         )
 
     async def get(self, clause):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = sa.select(UserEntity).where(UserEntity.email == clause)
 
             result = await session.execute(q)
             return result.scalars().first()
 
     async def create(self, model: models.BaseUser):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             user = UserEntity(**model.dict())
             session.add(user)
             await session.commit()

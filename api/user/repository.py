@@ -14,7 +14,7 @@ class UsersRepository(Repository):
         )
 
     async def get(self, clause):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = sa.select(UserEntity).where(UserEntity.email == clause)
 
             result = await session.execute(q)
@@ -23,7 +23,7 @@ class UsersRepository(Repository):
             raise exc.not_found()
 
     async def update(self, clause, payload: models.BaseUser):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = (
                 sa.update(UserEntity)
                 .where(UserEntity.email == clause)
@@ -34,14 +34,14 @@ class UsersRepository(Repository):
             await session.commit()
 
     async def delete(self, clause):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = sa.delete(UserEntity).where(UserEntity.email == clause)
 
             await session.execute(q)
             await session.commit()
 
     async def update_password(self, clause, password: str):
-        async with self._context.create_session() as session:
+        async with self.context.create_session() as session:
             q = (
                 sa.update(UserEntity)
                 .where(UserEntity.email == clause)
