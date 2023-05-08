@@ -14,5 +14,11 @@ class NeedRepository(Repository):
         )
     
     async def create(self, payload: models.BaseNeed):
-        async with self.context.create_async_engine() as session:
-            pass
+        async with self.context.create_session() as session:
+            
+            need = NeedEntity(**payload.dict())
+
+            session.add(need)
+            await session.commit()
+
+            return self.to_dto(need)
