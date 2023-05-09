@@ -8,6 +8,8 @@ from .loans import LoanEntity
 
 
 class NeedEntity(Entity):
+    __tablename__ = "needs"
+
     description = sa.Column(sa.Text)
     period = sa.Column(sa.String(255))
     product_id = sa.Column(sa.Integer, sa.ForeignKey("products.id"))
