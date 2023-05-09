@@ -13,7 +13,6 @@ class ProductRepository(Repository):
                 "id": obj.id,
                 "name": obj.name,
                 "description": obj.description,
-                "image": obj.image,
             }
         )
 
@@ -51,5 +50,5 @@ class ProductRepository(Repository):
             session.add(product)
             await session.commit()
 
-            return product
+            return self.to_dto(product)
     

@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Depends
+from fastapi import Body
 
 from api import common
 from api.database.config import DBConnectionHandler
@@ -21,10 +22,10 @@ async def list_products(
     return await domain.ListProductsByUserUseCase(context, user, params).execute()
 
 
-@router.post("/products")
+@router.post("/products", response_model=models.Product, status_code=201)
 async def create_product(
     context: DBConnectionHandler = Depends(),
     user: common.BaseUser = Depends(protected_route),
-    payload: models.CreateProduct = Depends(),
+    payload: models.Product = Body(...)
 ):
     return await domain.CreateProductUseCase(context, user, payload).execute()

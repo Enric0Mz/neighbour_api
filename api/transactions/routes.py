@@ -15,7 +15,7 @@ from . import models
 router = APIRouter(dependencies=[Depends(protected_route)])
 
 
-@router.post("/need", response_model=models.BaseNeed)
+@router.post("/need", response_model=models.BaseNeed, status_code=201)
 async def create_need(
     product_id: int = Path(...),
     context: DBConnectionHandler = Depends(),
