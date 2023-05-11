@@ -37,7 +37,7 @@ class ListProductsByUserUseCase:
 
 class CreateProductUseCase:
     def __init__(
-        self, context: DBConnectionHandler, user: BaseUser, paylaod: models.Product
+        self, context: DBConnectionHandler, user: BaseUser, paylaod: models.SimpleProduct
     ) -> None:
         self._repository = ProductRepository(context)
         self._user_id = user.id

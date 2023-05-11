@@ -1,4 +1,5 @@
 PYTHON := python
+RUN := poetry run
 
 run:
 	poetry run uvicorn api.main:app --reload  --port 9000

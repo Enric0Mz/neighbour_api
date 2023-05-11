@@ -23,7 +23,7 @@ async def create_acess_token(
     if expires_delta:
         expire = current_timestamp + expires_delta
     else:
-        expire = current_timestamp + timedelta(hours=100)
+        expire = current_timestamp + timedelta(minutes=5)
     encode = {"sub": email, "id": user_id, "exp": expire}
     token = jwt.encode(encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
     await AuthRepository(context).update_acess_token(email, token)

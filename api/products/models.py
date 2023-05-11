@@ -1,10 +1,16 @@
-from api.base_app.model import BaseModel
+from api.base_app.model import Model
 
 
-class Product(BaseModel):
+class Product(Model):
+    id: int
     name: str
     description: str
 
 
-class InsertProduct(Product):
+class SimpleProduct(Model):
+    name: str
+    description: str
+
+
+class InsertProduct(SimpleProduct):
     user_id: int

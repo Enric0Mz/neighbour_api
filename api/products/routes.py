@@ -22,6 +22,6 @@ async def list_products(
 async def create_product(
     context: DBConnectionHandler = Depends(),
     user: common.BaseUser = Depends(protected_route),
-    payload: models.Product = Body(...),
+    payload: models.SimpleProduct = Body(...),
 ):
     return await domain.CreateProductUseCase(context, user, payload).execute()

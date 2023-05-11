@@ -47,7 +47,7 @@ class CreateLoanUseCase:
     async def execute(self):
         return await self._repository.create(
             models.CreateLoan(
-                self._payload.dict(),
+                **self._payload.dict(),
                 loan_date=datetime.now(),
                 product_id=self._product_id,
                 user_id=self._user.id,

@@ -5,9 +5,9 @@ from fastapi import Query
 from pydantic import Field, validator
 from pydantic.generics import GenericModel
 
-from api.base_app.model import BaseModel
+from api.base_app.model import Model
 
-T_co = TypeVar("T_co", bound=BaseModel, covariant=True)
+T_co = TypeVar("T_co", bound=Model, covariant=True)
 
 
 @dataclass(frozen=True)
@@ -16,7 +16,7 @@ class PageParams:
     limit: int = Query(100)
 
 
-class Details(BaseModel):
+class Details(Model):
     page: int | None = None
     limit_per_page: int | None = None
     total_pages: int | None = 0
@@ -27,6 +27,6 @@ class Details(BaseModel):
         return 0 if val is None else val
 
 
-class BasePagination(GenericModel, Generic[T_co], BaseModel):
+class BasePagination(GenericModel, Generic[T_co], Model):
     data: list = Field(default_factory=list)
     details: Details = Field(default_factory=Details)
