@@ -1,9 +1,8 @@
 import re
 
-from api.base_app.model import BaseModel
+from pydantic import EmailStr, validator
 
-from pydantic import validator
-from pydantic import EmailStr
+from api.base_app.model import BaseModel
 
 
 class BaseUser(BaseModel):

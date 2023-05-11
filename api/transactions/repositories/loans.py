@@ -1,7 +1,6 @@
 from api.database.repository import Repository
-
-from api.transactions.entities.loans import LoanEntity
 from api.transactions import models
+from api.transactions.entities.loans import LoanEntity
 
 
 class LoanRepository(Repository):
@@ -13,10 +12,9 @@ class LoanRepository(Repository):
                 "devolution_date": obj.devolution_date,
             }
         )
-    
+
     async def create(self, model: models.CreateLoan):
         async with self.context.create_session() as session:
-
             loan = LoanEntity(**model.dict())
             session.add(loan)
             await session.commit()

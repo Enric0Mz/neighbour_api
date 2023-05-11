@@ -1,8 +1,6 @@
 from api.database.config import DBConnectionHandler
-
-from api.register.entities.condominium import CondominiumEntity
-
 from api.register import models
+from api.register.entities.condominium import CondominiumEntity
 
 
 class CondominiumRepository:

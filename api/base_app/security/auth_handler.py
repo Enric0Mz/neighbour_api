@@ -1,13 +1,12 @@
-from typing import Optional
-from pydantic import EmailStr
 from datetime import datetime, timedelta
+from typing import Optional
 
-from decouple import config
 import jwt
+from decouple import config
+from pydantic import EmailStr
 
-from api.database.config import DBConnectionHandler
 from api.auth.repository import AuthRepository
-
+from api.database.config import DBConnectionHandler
 
 JWT_SECRET = config("secret")
 JWT_ALGORITHM = config("algorithm")

@@ -1,13 +1,12 @@
 import jwt
-from fastapi import Request, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from api.auth.repository import AuthRepository
-from api.database.config import DBConnectionHandler
 from api.base_app import exc
+from api.database.config import DBConnectionHandler
 
-from .auth_handler import JWT_SECRET
-from .auth_handler import JWT_ALGORITHM
+from .auth_handler import JWT_ALGORITHM, JWT_SECRET
 
 
 class JWTBearer(HTTPBearer):

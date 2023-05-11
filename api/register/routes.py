@@ -1,13 +1,8 @@
-from fastapi import APIRouter
-from fastapi import Body
-from fastapi import Depends
-from fastapi import Path
+from fastapi import APIRouter, Body, Depends, Path
 
 from api.database.config import DBConnectionHandler
 
-from . import domain
-from . import models
-
+from . import domain, models
 
 router = APIRouter()
 

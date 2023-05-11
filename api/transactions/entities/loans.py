@@ -3,6 +3,7 @@ import sqlalchemy as sa
 from api.database.entity import Entity
 from api.register.entities.user import UserEntity
 
+
 class LoanEntity(Entity):
     __tablename__ = "loans"
 

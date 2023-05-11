@@ -1,16 +1,10 @@
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Path
-from fastapi import Body
+from fastapi import APIRouter, Body, Depends, Path
 
-from api.database.config import DBConnectionHandler
 from api.base_app.security.dependecies import protected_route
 from api.common.user import BaseUser
+from api.database.config import DBConnectionHandler
 
-
-from . import domain
-from . import models
-
+from . import domain, models
 
 router = APIRouter(dependencies=[Depends(protected_route)])
 
@@ -32,5 +26,4 @@ async def create_loan(
     user: BaseUser = Depends(protected_route),
     payload: models.BaseLoan = Body(...),
 ):
-    return await domain.CreateLoanUseCase(context, user, product_id, payload).execute(
-)
+    return await domain.CreateLoanUseCase(context, user, product_id, payload).execute()

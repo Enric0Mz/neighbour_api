@@ -1,14 +1,10 @@
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Body
+from fastapi import APIRouter, Body, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from api.base_app.security.dependecies import protected_route
 from api.database.config import DBConnectionHandler
 
-from . import domain
-from . import models
-
+from . import domain, models
 
 router = APIRouter()
 

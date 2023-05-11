@@ -1,5 +1,4 @@
-from fastapi import HTTPException
-from fastapi import status
+from fastapi import HTTPException, status
 
 
 def not_found():

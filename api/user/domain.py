@@ -1,10 +1,9 @@
-from api.database.config import DBConnectionHandler
-from api.base_app.security.bcrypt import verify_password
-from api.base_app.security.bcrypt import get_password_hash
 from api.base_app import exc
+from api.base_app.security.bcrypt import get_password_hash, verify_password
+from api.database.config import DBConnectionHandler
 
-from .repository import UsersRepository
 from . import models
+from .repository import UsersRepository
 
 
 class GetSelfUserUseCase:

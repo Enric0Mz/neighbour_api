@@ -1,8 +1,9 @@
-import sqlalchemy as sa
 from typing import final
 
-from .connection import Base
+import sqlalchemy as sa
 from sqlalchemy.orm import declared_attr
+
+from .connection import Base
 
 
 class Entity(Base):

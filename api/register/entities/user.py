@@ -1,7 +1,6 @@
 import sqlalchemy as sa
 
 from api.database.entity import Entity
-
 from api.register.entities.condominium import CondominiumEntity
 
 

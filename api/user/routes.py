@@ -1,14 +1,9 @@
-from fastapi import APIRouter
-from fastapi import Body
-from fastapi import Depends
-from fastapi import Path
+from fastapi import APIRouter, Body, Depends
 
-from api.database.config import DBConnectionHandler
 from api.base_app.security.dependecies import protected_route
+from api.database.config import DBConnectionHandler
 
-from . import domain
-from . import models
-
+from . import domain, models
 
 router = APIRouter()
 
@@ -39,7 +34,9 @@ async def update_password(
     await domain.UpdatePasswordUseCase(context, user, payload).execute()
 
 
-router.delete('/me', status_code=204)
+router.delete("/me", status_code=204)
+
+
 async def delete_user(
     user: models.BaseUser = Depends(protected_route),
     context: DBConnectionHandler = Depends(),

@@ -1,10 +1,9 @@
+from api.base_app.security.bcrypt import get_password_hash
 from api.database.config import DBConnectionHandler
 
-from api.base_app.security.bcrypt import get_password_hash
-
-from .repositories.user import UsersRepository
-from .repositories.condominium import CondominiumRepository
 from . import models
+from .repositories.condominium import CondominiumRepository
+from .repositories.user import UsersRepository
 
 
 class CreateUserUseCase:

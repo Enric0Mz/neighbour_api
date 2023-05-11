@@ -1,13 +1,11 @@
-from fastapi import Query
-from pydantic import Field
-from pydantic import validator
-from pydantic.generics import GenericModel
 from dataclasses import dataclass
-from typing import Generic
-from typing import TypeVar
+from typing import Generic, TypeVar
+
+from fastapi import Query
+from pydantic import Field, validator
+from pydantic.generics import GenericModel
 
 from api.base_app.model import BaseModel
-
 
 T_co = TypeVar("T_co", bound=BaseModel, covariant=True)
 
@@ -27,10 +25,8 @@ class Details(BaseModel):
     @validator("total_pages")
     def ensure_zero_on_none(cls, val: int | None):
         return 0 if val is None else val
-    
+
 
 class BasePagination(GenericModel, Generic[T_co], BaseModel):
     data: list = Field(default_factory=list)
     details: Details = Field(default_factory=Details)
-
-

@@ -1,9 +1,9 @@
 import sqlalchemy as sa
 from pydantic import EmailStr
-from api.database.repository import Repository
-from api.register.entities.user import UserEntity
 
 from api.base_app import exc
+from api.database.repository import Repository
+from api.register.entities.user import UserEntity
 
 
 class AuthRepository(Repository):

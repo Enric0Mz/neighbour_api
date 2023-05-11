@@ -1,14 +1,21 @@
-from api.database.config import DBConnectionHandler
-from api import common
 from datetime import datetime
 
+from api import common
+from api.database.config import DBConnectionHandler
+
 from . import models
-from .repositories.needs import NeedRepository
 from .repositories.loans import LoanRepository
+from .repositories.needs import NeedRepository
 
 
 class CreateNeedUseCase:
-    def __init__(self, context: DBConnectionHandler, user: common.BaseUser, product_id: int, payload: models.BaseNeed) -> None:
+    def __init__(
+        self,
+        context: DBConnectionHandler,
+        user: common.BaseUser,
+        product_id: int,
+        payload: models.BaseNeed,
+    ) -> None:
         self._repository = NeedRepository(context)
         self._user = user
         self._product_id = product_id
@@ -25,7 +32,13 @@ class CreateNeedUseCase:
 
 
 class CreateLoanUseCase:
-    def __init__(self, context: DBConnectionHandler, user: common.BaseUser, product_id: int, payload: models.BaseLoan) -> None:
+    def __init__(
+        self,
+        context: DBConnectionHandler,
+        user: common.BaseUser,
+        product_id: int,
+        payload: models.BaseLoan,
+    ) -> None:
         self._repository = LoanRepository(context)
         self._user = user
         self._product_id = product_id

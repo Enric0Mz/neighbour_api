@@ -1,7 +1,6 @@
 from api.database.repository import Repository
-
-from api.transactions.entities.needs import NeedEntity
 from api.transactions import models
+from api.transactions.entities.needs import NeedEntity
 
 
 class NeedRepository(Repository):
@@ -12,10 +11,9 @@ class NeedRepository(Repository):
                 "period": obj.period,
             }
         )
-    
+
     async def create(self, payload: models.BaseNeed):
         async with self.context.create_session() as session:
-            
             need = NeedEntity(**payload.dict())
 
             session.add(need)

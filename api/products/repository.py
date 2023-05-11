@@ -2,8 +2,8 @@ import sqlalchemy as sa
 
 from api.database.repository import Repository
 
-from .entity import ProductEntity
 from . import models
+from .entity import ProductEntity
 
 
 class ProductRepository(Repository):
@@ -18,7 +18,6 @@ class ProductRepository(Repository):
 
     async def fetch(self, clause, page: int = 0, limit: int = 100):
         async with self.context.create_session() as session:
-            
             q = (
                 sa.select(ProductEntity)
                 .where(ProductEntity.user_id == clause)
@@ -29,26 +28,21 @@ class ProductRepository(Repository):
             result = await session.execute(q)
 
             return [self.to_dto(item) for item in result.scalars().all()]
-        
 
     async def count(self, clause):
         async with self.context.create_session() as session:
+            q = sa.select(sa.func.count(ProductEntity.id)).where(
+                (ProductEntity.user_id == clause)
+            )
 
-            q =  sa.select(sa.func.count(ProductEntity.id)).where(
-                    (ProductEntity.user_id == clause)
-                )
-            
             result = await session.execute(q)
 
             return result.scalar_one()
-        
 
     async def create(self, model: models.InsertProduct):
         async with self.context.create_session() as session:
-
             product = ProductEntity(**model.dict())
             session.add(product)
             await session.commit()
 
             return self.to_dto(product)
-    
