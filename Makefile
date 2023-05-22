@@ -2,7 +2,7 @@ PYTHON := python
 RUN := poetry run
 
 run:
-	poetry run uvicorn api.main:app --reload  --port 9000
+	@${RUN} uvicorn api.main:app --reload  --port 9000
 
 format:
 	@echo "Running black"
