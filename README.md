@@ -12,7 +12,7 @@ Notifications: Users receive notifications about new messages, comments on their
 
 <h2>Requirements</h2>
 <h3>To run the Neighborhood Connect API locally, you need to have the following software installed:</h3>
-Python 3.7 or above
+<p>Python 3.7 or above</p>
 poetry 1.1.2
 
 <h3>Install dependecies</h3>
