@@ -28,5 +28,5 @@ class Details(Model):
 
 
 class BasePagination(GenericModel, Generic[T_co], Model):
-    data: list = Field(default_factory=list)
+    data: list[T_co] = Field(default_factory=list)
     details: Details = Field(default_factory=Details)
