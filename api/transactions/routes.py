@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends, Path
+from fastapi import APIRouter, Body, Depends, Path, Query
 
 from api.base_app.security.dependecies import protected_route
 from api.common.user import BaseUser
@@ -24,8 +24,10 @@ async def create_need(
 async def list_needs(
     context: DBConnectionHandler = Depends(),
     params: common.PageParams = Depends(), 
+    self_user_only: bool = Query(False, alias='My'),
+    user: common.BaseUser = Depends(protected_route)
 ):
-    return await domain.ListNeedsUseCase(context, params).execute()
+    return await domain.ListNeedsUseCase(context, params, self_user_only, user).execute()
 
 
 @router.post("/loan/{product_id}", response_model=models.BaseLoan, status_code=201)

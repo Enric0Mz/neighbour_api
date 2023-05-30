@@ -32,13 +32,18 @@ class CreateNeedUseCase:
     
 
 class ListNeedsUseCase:
-    def __init__(self, context: DBConnectionHandler, params: common.PageParams) -> None:
+    def __init__(self, context: DBConnectionHandler, params: common.PageParams, self_user_only: bool, user: common.BaseUser) -> None:
         self._repository = NeedRepository(context)
         self._params = params
+        self._self_user_only = self_user_only
+        self._user = user
 
     async def execute(self):
-        result = await self._repository.fetch(self._params.page, self._params.limit)
-        print(result)
+        filters = {'loan_id': None}
+        if self._self_user_only:
+            filters['user_id'] = self._user.id
+        
+        result = await self._repository.fetch(filters, self._params.page, self._params.limit)
 
         total = await self._repository.count()
 
