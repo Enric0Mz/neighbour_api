@@ -9,7 +9,7 @@ format:
 	@${RUN} black api tests
 
 	@echo "Running isort"
-	@${RUN} isort api tests
+	@${RUN} isort api tests --profile=black --line-length=79
 
 	@echo "Running autoflake"
 	@${RUN} autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --expand-star-imports -ir api tests

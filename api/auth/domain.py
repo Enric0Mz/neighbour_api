@@ -3,10 +3,12 @@ from jwt import DecodeError
 
 from api.auth.repository import AuthRepository
 from api.base_app import exc
-from api.base_app.security.auth_handler import (JWT_ALGORITHM,
-                                                JWT_REFRESH_SECRET,
-                                                create_access_token,
-                                                create_refresh_token)
+from api.base_app.security.auth_handler import (
+    JWT_ALGORITHM,
+    JWT_REFRESH_SECRET,
+    create_access_token,
+    create_refresh_token,
+)
 from api.base_app.security.bcrypt import verify_password
 from api.database.config import DBConnectionHandler
 from api.register.models import BaseUser
