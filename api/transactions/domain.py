@@ -29,7 +29,34 @@ class CreateNeedUseCase:
                 user_id=self._user.id,
             )
         )
+    
 
+class ListNeedsUseCase:
+    def __init__(self, context: DBConnectionHandler, params: common.PageParams) -> None:
+        self._repository = NeedRepository(context)
+        self._params = params
+
+    async def execute(self):
+        result = await self._repository.fetch(self._params.page, self._params.limit)
+        print(result)
+
+        total = await self._repository.count()
+
+        total_pages = (
+            0
+            if (total / self._params.limit) == 1
+            else (total // self._params.limit)
+        )
+
+        return common.BasePagination[models.BaseNeed](
+            data=result,
+            details=common.Details(
+                page=self._params.page,
+                limit_per_page=self._params.limit,
+                total_pages=total_pages,
+                total_items=total,
+            )
+        ) 
 
 class CreateLoanUseCase:
     def __init__(

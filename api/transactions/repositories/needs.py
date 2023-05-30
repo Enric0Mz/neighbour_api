@@ -1,3 +1,5 @@
+import sqlalchemy as sa
+
 from api.database.repository import Repository
 from api.transactions import models
 from api.transactions.entities.needs import NeedEntity
@@ -20,3 +22,26 @@ class NeedRepository(Repository):
             await session.commit()
 
             return self.to_dto(need)
+        
+    async def fetch(self, page = 0, limit = 100):
+        async with self.context.create_session() as session:
+
+            q = (
+                sa.select(NeedEntity)
+                .where(NeedEntity.loan_id == None)
+                .limit(limit)
+                .offset(page * limit)
+            )
+
+            result = await session.execute(q)
+
+            return[self.to_dto(item) for item in result.scalars().all()]
+
+
+    async def count(self):
+        async with self.context.create_session() as session:
+            q = sa.select(sa.func.count(NeedEntity.id)).where(NeedEntity.loan_id == None)
+
+            result = await session.execute(q)
+
+            return result.scalar_one()
