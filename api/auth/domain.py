@@ -5,7 +5,7 @@ from api.auth.repository import AuthRepository
 from api.base_app import exc
 from api.base_app.security.auth_handler import (JWT_ALGORITHM,
                                                 JWT_REFRESH_SECRET,
-                                                create_acess_token,
+                                                create_access_token,
                                                 create_refresh_token)
 from api.base_app.security.bcrypt import verify_password
 from api.database.config import DBConnectionHandler
@@ -32,11 +32,11 @@ class UserLoginUseCase:
         if info is None:
             exc.not_found()
         if verify_password(self._password, info.password):
-            acess = await create_acess_token(self._context, info.email, info.pk)
+            access = await create_access_token(self._context, info.email, info.pk)
             refresh = await create_refresh_token(self._context, info.email, info.pk)
             return {
-                "acess_token": acess["token"],
-                "expires": acess["expires"],
+                "access_token": access["token"],
+                "expires": access["expires"],
                 "type": "Bearer",
                 "refresh_token": refresh["refresh_token"],
             }
@@ -60,14 +60,14 @@ class UserRefreshSessionUseCase:
         if token:
             await self._repository.get_by_refresh(self._refresh_token)
 
-            acess = await create_acess_token(self._context, token["sub"], token["id"])
+            access = await create_access_token(self._context, token["sub"], token["id"])
             refresh = await create_refresh_token(
                 self._context, token["sub"], token["id"]
             )
 
             return {
-                "acess_token": acess["token"],
-                "expires": acess["expires"],
+                "access_token": access["token"],
+                "expires": access["expires"],
                 "type": "Bearer",
                 "refresh_token": refresh["refresh_token"],
             }
@@ -79,5 +79,5 @@ class LogoutUseCase:
         self._user = user
 
     async def execute(self):
-        await self._repository.update_acess_token(self._user.email, None)
+        await self._repository.update_access_token(self._user.email, None)
         await self._repository.update_refresh_token(self._user.email, None)

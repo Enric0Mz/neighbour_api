@@ -25,7 +25,7 @@ class AuthRepository(Repository):
 
             return result.scalars().one()
 
-    async def update_acess_token(self, email: EmailStr, token: str) -> None:
+    async def update_access_token(self, email: EmailStr, token: str) -> None:
         async with self.context.create_session() as session:
             q = (
                 sa.update(UserEntity)

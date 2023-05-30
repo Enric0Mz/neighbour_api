@@ -4,7 +4,7 @@ from api.base_app.model import Model
 
 
 class Token(Model):
-    acess_token: str
+    access_token: str
     expires: datetime
     type: str
     refresh_token: str

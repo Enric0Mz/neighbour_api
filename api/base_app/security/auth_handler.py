@@ -13,7 +13,7 @@ JWT_ALGORITHM = config("algorithm")
 JWT_REFRESH_SECRET = config("rsecret")
 
 
-async def create_acess_token(
+async def create_access_token(
     context: DBConnectionHandler,
     email: EmailStr,
     user_id: str,
@@ -26,7 +26,7 @@ async def create_acess_token(
         expire = current_timestamp + timedelta(minutes=5)
     encode = {"sub": email, "id": user_id, "exp": expire}
     token = jwt.encode(encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
-    await AuthRepository(context).update_acess_token(email, token)
+    await AuthRepository(context).update_access_token(email, token)
 
     return {"token": token, "expires": expire, "type": "Bearer"}
 
