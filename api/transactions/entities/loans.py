@@ -1,8 +1,8 @@
 import sqlalchemy as sa
 
 from api.database.entity import Entity
-from api.register.entities.user import UserEntity
 from api.products.entity import ProductEntity
+from api.register.entities.user import UserEntity
 
 
 class LoanEntity(Entity):

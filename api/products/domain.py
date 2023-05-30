@@ -1,4 +1,3 @@
-
 from api import common
 from api.common.user import BaseUser
 from api.database.config import DBConnectionHandler
@@ -37,7 +36,10 @@ class ListProductsByUserUseCase:
 
 class CreateProductUseCase:
     def __init__(
-        self, context: DBConnectionHandler, user: BaseUser, paylaod: models.SimpleProduct
+        self,
+        context: DBConnectionHandler,
+        user: BaseUser,
+        paylaod: models.SimpleProduct,
     ) -> None:
         self._repository = ProductRepository(context)
         self._user_id = user.id

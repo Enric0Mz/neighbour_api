@@ -13,7 +13,6 @@ from api.register.models import BaseUser
 from api.register.repositories.user import UsersRepository
 
 
-
 class UserLoginUseCase:
     def __init__(
         self,

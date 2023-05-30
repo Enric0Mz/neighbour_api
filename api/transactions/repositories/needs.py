@@ -22,15 +22,14 @@ class NeedRepository(Repository):
             await session.commit()
 
             return self.to_dto(need)
-        
-    async def fetch(self, filters: dict, page = 0, limit = 100):
-        async with self.context.create_session() as session:
 
+    async def fetch(self, filters: dict, page=0, limit=100):
+        async with self.context.create_session() as session:
             filter_clauses = [
-                    getattr(NeedEntity, field, None) == value
-                    for field, value in filters.items()
-                    if getattr(NeedEntity, field, None) is not None
-                ]
+                getattr(NeedEntity, field, None) == value
+                for field, value in filters.items()
+                if getattr(NeedEntity, field, None) is not None
+            ]
 
             q = (
                 sa.select(NeedEntity)
@@ -41,11 +40,13 @@ class NeedRepository(Repository):
 
             result = await session.execute(q)
 
-            return[self.to_dto(item) for item in result.scalars().all()]
+            return [self.to_dto(item) for item in result.scalars().all()]
 
     async def count(self):
         async with self.context.create_session() as session:
-            q = sa.select(sa.func.count(NeedEntity.id)).where(NeedEntity.loan_id == None)
+            q = sa.select(sa.func.count(NeedEntity.id)).where(
+                NeedEntity.loan_id == None
+            )
 
             result = await session.execute(q)
 
