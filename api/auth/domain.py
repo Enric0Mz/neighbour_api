@@ -84,7 +84,7 @@ class LogoutUseCase:
 
     async def execute(self):
         filters = {
-            "email": self._user.email, 
+            "email": self._user.email,
         }
 
         await self._repository.update_access_token(filters, None)

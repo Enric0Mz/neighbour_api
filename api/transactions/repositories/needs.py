@@ -1,7 +1,6 @@
 import sqlalchemy as sa
 
 from api.base_app.filters import comp_equals_filter_clause
-
 from api.database.repository import Repository
 from api.transactions import models
 from api.transactions.entities.needs import NeedEntity
@@ -29,12 +28,7 @@ class NeedRepository(Repository):
         async with self.context.create_session() as session:
             f = comp_equals_filter_clause(NeedEntity, filters)
 
-            q = (
-                sa.select(NeedEntity)
-                .where(*f)
-                .limit(limit)
-                .offset(page * limit)
-            )
+            q = sa.select(NeedEntity).where(*f).limit(limit).offset(page * limit)
 
             result = await session.execute(q)
 

@@ -1,5 +1,4 @@
 import sqlalchemy as sa
-from pydantic import EmailStr
 
 from api.base_app import exc
 from api.base_app.filters import comp_equals_filter_clause
@@ -20,7 +19,6 @@ class AuthRepository(Repository):
 
     async def get_by_refresh(self, filters: dict) -> None:
         async with self.context.create_session() as session:
-
             f = comp_equals_filter_clause(UserEntity, filters)
 
             q = sa.select(UserEntity).where(*f)
@@ -32,26 +30,17 @@ class AuthRepository(Repository):
     async def update_access_token(self, filters: dict, token: str) -> None:
         async with self.context.create_session() as session:
             f = comp_equals_filter_clause(UserEntity, filters)
-            
-            q = (
-                sa.update(UserEntity)
-                .where(*f)
-                .values(token=token)
-            )
+
+            q = sa.update(UserEntity).where(*f).values(token=token)
 
             await session.execute(q)
             await session.commit()
 
     async def update_refresh_token(self, filters: dict, token: str):
         async with self.context.create_session() as session:
-
             f = comp_equals_filter_clause(UserEntity, filters)
 
-            q = (
-                sa.update(UserEntity)
-                .where(*f)
-                .values(refresh_token=token)
-            )
+            q = sa.update(UserEntity).where(*f).values(refresh_token=token)
 
             await session.execute(q)
             await session.commit()

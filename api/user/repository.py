@@ -16,7 +16,6 @@ class UsersRepository(Repository):
 
     async def get(self, filters: dict):
         async with self.context.create_session() as session:
-
             f = comp_equals_filter_clause(UserEntity, filters)
 
             q = sa.select(UserEntity).where(*f)

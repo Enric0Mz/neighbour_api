@@ -12,7 +12,6 @@ class GetSelfUserUseCase:
         self._user = user
 
     async def execute(self):
-        
         filters = {"email": self._user.email}
 
         return await self._repository.get(filters)
