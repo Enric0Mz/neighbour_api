@@ -1,5 +1,7 @@
 import sqlalchemy as sa
 
+from api.base_app.filters import comp_equals_filter_clause
+
 from api.database.repository import Repository
 from api.transactions import models
 from api.transactions.entities.needs import NeedEntity
@@ -25,15 +27,11 @@ class NeedRepository(Repository):
 
     async def fetch(self, filters: dict, page=0, limit=100):
         async with self.context.create_session() as session:
-            filter_clauses = [
-                getattr(NeedEntity, field, None) == value
-                for field, value in filters.items()
-                if getattr(NeedEntity, field, None) is not None
-            ]
+            f = comp_equals_filter_clause(NeedEntity, filters)
 
             q = (
                 sa.select(NeedEntity)
-                .where(*filter_clauses)
+                .where(*f)
                 .limit(limit)
                 .offset(page * limit)
             )

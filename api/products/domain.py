@@ -13,11 +13,13 @@ class ListProductsByUserUseCase:
         self._params = params
 
     async def execute(self):
+        filters = {"user_id": self._user_id}
+
         result = await self._repository.fetch(
-            self._user_id, self._params.page, self._params.limit
+            filters, self._params.page, self._params.limit
         )
 
-        total = await self._repository.count(self._user_id)
+        total = await self._repository.count(filters)
 
         total_pages = (
             0 if (total / self._params.limit) == 1 else (total // self._params.limit)

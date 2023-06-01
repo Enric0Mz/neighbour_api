@@ -19,6 +19,7 @@ async def create_access_token(
     user_id: str,
     expires_delta: Optional[timedelta] = None,
 ):
+    filters = {"email": email}
     current_timestamp = datetime.utcnow()
     if expires_delta:
         expire = current_timestamp + expires_delta
@@ -26,7 +27,7 @@ async def create_access_token(
         expire = current_timestamp + timedelta(minutes=5)
     encode = {"sub": email, "id": user_id, "exp": expire}
     token = jwt.encode(encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
-    await AuthRepository(context).update_access_token(email, token)
+    await AuthRepository(context).update_access_token(filters, token)
 
     return {"token": token, "expires": expire, "type": "Bearer"}
 
@@ -37,6 +38,7 @@ async def create_refresh_token(
     user_id: str,
     expires_delta: Optional[timedelta] = None,
 ):
+    filters = {"email": email}
     current_timestamp = datetime.utcnow()
     if expires_delta:
         expire = current_timestamp + expires_delta
@@ -45,6 +47,6 @@ async def create_refresh_token(
     encode = {"sub": email, "id": user_id, "exp": expire}
     jwtre = jwt.encode(encode, JWT_REFRESH_SECRET, algorithm=JWT_ALGORITHM)
 
-    await AuthRepository(context).update_refresh_token(email, jwtre)
+    await AuthRepository(context).update_refresh_token(filters, jwtre)
 
     return {"refresh_token": jwtre, "expires": expire, "type": "Bearer"}

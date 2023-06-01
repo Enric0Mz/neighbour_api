@@ -28,7 +28,8 @@ class UserLoginUseCase:
         self._repository = UsersRepository(context)
 
     async def execute(self):
-        info = await self._repository.get(self._email)
+        filters = {"email": self._email}
+        info = await self._repository.get(filters)
 
         if info is None:
             exc.not_found()
@@ -51,6 +52,8 @@ class UserRefreshSessionUseCase:
         self._context = context
 
     async def execute(self):
+        filters = {"refresh_token": self._refresh_token}
+
         try:
             token = jwt.decode(
                 self._refresh_token, JWT_REFRESH_SECRET, algorithms=JWT_ALGORITHM
@@ -59,7 +62,7 @@ class UserRefreshSessionUseCase:
             raise exc.invalid_token()
 
         if token:
-            await self._repository.get_by_refresh(self._refresh_token)
+            await self._repository.get_by_refresh(filters)
 
             access = await create_access_token(self._context, token["sub"], token["id"])
             refresh = await create_refresh_token(
@@ -80,5 +83,9 @@ class LogoutUseCase:
         self._user = user
 
     async def execute(self):
-        await self._repository.update_access_token(self._user.email, None)
-        await self._repository.update_refresh_token(self._user.email, None)
+        filters = {
+            "email": self._user.email, 
+        }
+
+        await self._repository.update_access_token(filters, None)
+        await self._repository.update_refresh_token(filters, None)

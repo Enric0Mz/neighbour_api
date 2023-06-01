@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 
 from api.base_app import exc
+from api.base_app.filters import comp_equals_filter_clause
 from api.database.repository import Repository
 from api.register.entities.user import UserEntity
 
@@ -13,9 +14,12 @@ class UsersRepository(Repository):
             {"name": obj.name, "surname": obj.surname, "email": obj.email}
         )
 
-    async def get(self, clause):
+    async def get(self, filters: dict):
         async with self.context.create_session() as session:
-            q = sa.select(UserEntity).where(UserEntity.email == clause)
+
+            f = comp_equals_filter_clause(UserEntity, filters)
+
+            q = sa.select(UserEntity).where(*f)
 
             result = await session.execute(q)
             if first := result.scalars().first():

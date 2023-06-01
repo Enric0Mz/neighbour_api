@@ -12,7 +12,10 @@ class GetSelfUserUseCase:
         self._user = user
 
     async def execute(self):
-        return await self._repository.get(self._user.email)
+        
+        filters = {"email": self._user.email}
+
+        return await self._repository.get(filters)
 
 
 class UpdateUserUseCase:
